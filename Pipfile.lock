@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "cece81e4ddca4aee3972257bfff52b67e427f50ccbdf4142e9bc883ae7d91c1f"
+            "sha256": "87fb081e268762434410cdc8925eb4beed48ace9d232223e53426e2899147f64"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -207,6 +207,13 @@
             ],
             "markers": "python_version >= '3.5'",
             "version": "==8.13.0"
+        },
+        "neo4j": {
+            "hashes": [
+                "sha256:4f8982028021f9fc5e3e3605e6368302d6a97ea75a48666ae49fcc974113a3c8"
+            ],
+            "index": "pypi",
+            "version": "==4.4.4"
         },
         "networkx": {
             "hashes": [
