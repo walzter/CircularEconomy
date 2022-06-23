@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 igraph = "*"
 scikit-learn = "*"
+nxviz = "*"
 
 [dev-packages]
 ipykernel = "*"
