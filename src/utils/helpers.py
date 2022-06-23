@@ -10,6 +10,6 @@ def reading(path):
     #
     df = df.set_index('Processes')
 
-    df.head()
+ 
 
     return df 
