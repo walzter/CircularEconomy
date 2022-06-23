@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # README 
 
 
@@ -17,3 +18,6 @@ The system will include the following:
 - Feedback 
 - Locally update graph in the mapping network 
 
+=======
+# CircularEconomy
+>>>>>>> main
