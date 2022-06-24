@@ -23,6 +23,6 @@ class Material(StructuredNode):
     cost = IntegerProperty()
     description = StringProperty()
     associated_materials = RelationshipTo("Material", "USED_WITH")
-    #associated_processes = RelationshipTo("Process", "USED_IN")
+    associated_processes = RelationshipTo("db.Processes.Process", "USED_IN")
     
     

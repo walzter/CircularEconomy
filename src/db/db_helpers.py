@@ -1,5 +1,7 @@
 from neomodel import db 
-from db.Materials import Material 
+from db.Materials import Material
+from db.Processes import Process
+from termcolor import colored
 
 def load_env_vars():
     """Loads Environment variables from the .env file """
@@ -13,7 +15,7 @@ def load_env_vars():
     return dict(uri=base_uri, user=username, password=password)
 
 
-def add_material(material_dict:dict) -> bool: 
+def add_material(material_dict:dict,verbose:bool) -> bool: 
     """
     Add a new material to the database.
     
@@ -24,8 +26,14 @@ def add_material(material_dict:dict) -> bool:
         bool: True if the material was added, False otherwise.
     """
     try:
-        material = Material(**material_dict).save()
-        print(f"Material: {material_dict['uuid']}-{material_dict['name']} added")
+        material = Material.nodes.first_or_none(uuid=material_dict['uuid'])
+        if material == None: 
+            material = Material(**material_dict).save()
+            if verbose:
+                print(colored(f"Material: {material_dict['uuid']}-{material_dict['name']} added", "green"))
+        else:
+            if verbose:
+                print(colored(f"Material: {material_dict['uuid']} already exists",'red'))
         return material, True
     except Exception as e:
         print(e)
@@ -42,6 +50,7 @@ def remove_material(material_id:str) -> bool:
         bool: True if the material was removed, False otherwise.
     """
     try:
+
         Material.nodes.get(uuid=material_id).delete()
         print(f"Material: {material_id} deleted")
         return True
@@ -106,6 +115,25 @@ def add_material_relationship(material1:str, material2:str) -> bool:
     except Exception as e: 
         print(e)
         return False
+
+
+def add_process(process_dict:dict, verbose:bool):
+    """
+    Add a process to the database
+    """
+    try: 
+        process = Process.nodes.first_or_none(uuid=process_dict['uuid'])
+        if process == None:
+            process = Process(**process_dict).save()
+            if verbose:
+                print(colored(f"Process {process.uuid} added", 'green'))
+        else:
+            if verbose:
+                print(colored(f"Process {process.uuid} already exists", 'red'))
+        return process, True
+    except Exception as e:
+        print(e)
+        return process, False
 
 ## define function to clear the database of all nodes and relationships 
 def clear_db(): 
