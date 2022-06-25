@@ -132,3 +132,51 @@ def get_material_energy_attributes_count(name:str):
     """
     ele = db.cypher_query("MATCH (n:Material {name: '" + name + "'}) RETURN count(n.energy)")
     return ele
+
+# Get communities for a specific material and return the corresponding nodes
+def get_communities(name:str):
+    """
+    Get the communities for a specific material and return the corresponding nodes.
+    """
+    ele = db.cypher_query("MATCH (n:Material {name: '" + name + "'}) RETURN n.communities")
+    return ele
+
+# Return a list with the recomendation for new processes with materiales that are not used in the database
+def get_recomendation():
+    """
+    Return a list with the recomendation for new processes with materiales that are not used in the database.
+    """
+    ele = db.cypher_query("MATCH (n:Material) WHERE NOT (n)--(:Process) RETURN n.name")
+    # Get the list of the materials that are not used by processes
+    materials = []
+    for i in ele:
+        materials.append(i[0])
+    # Get the list of the processes that are not used by processes
+    processes = []
+    ele = db.cypher_query("MATCH (n:Process) WHERE NOT (n)--(:Process) RETURN n.name")
+    for i in ele:
+        processes.append(i[0])
+    # Get the list of the processes that are not used by processes
+    processes_outputs = []
+    ele = db.cypher_query("MATCH (n:Process) WHERE NOT (n)--(:Process) RETURN n.output")
+    for i in ele:
+        processes_outputs.append(i[0])
+    # Get the list of the processes that are not used by processes
+    processes_inputs = []
+    ele = db.cypher_query("MATCH (n:Process) WHERE NOT (n)--(:Process) RETURN n.input")
+    for i in ele:
+        processes_inputs.append(i[0])
+    # Get the list of the processes that are not used by processes
+    processes_energy = []
+    ele = db.cypher_query("MATCH (n:Process) WHERE NOT (n)--(:Process) RETURN n.energy")
+    for i in ele:
+        processes_energy.append(i[0])
+    # Get the list of the processes that are not used by processes
+    processes_communities = []
+    ele = db.cypher_query("MATCH (n:Process) WHERE NOT (n)--(:Process) RETURN n.communities")
+
+   # returning all variables
+    return materials, processes, processes_outputs, processes_inputs, processes_energy, processes_communities
+
+
+    
