@@ -23,7 +23,7 @@ class Process(StructuredNode):
     total_input_cost = IntegerProperty()
     total_output_cost = IntegerProperty()
     
-    ## create the process payload 
+## create the process payload 
 def process_payload(uuid:str, name:str, output_materials:str=None, input_materials:str=None, description:str=None, total_input_cost:int=None, total_output_cost:int=None):
     return {"uuid": uuid,
             "name": name,
@@ -41,7 +41,7 @@ def populate_process_from_df(df:pd.DataFrame,verbose:bool) -> None:
         process = row['Processes']
         material = row['Material']
         material_obj = Material.nodes.filter(uuid=material)[0]
-        process_name = row['Processes']+"__XX"
+        process_name = row['Processes']+"__XX" ## add a random string to the process name to avoid duplicates
         consumption = row['Consumption']
         is_input = consumption < 0
         ## create the process
@@ -53,7 +53,7 @@ def populate_process_from_df(df:pd.DataFrame,verbose:bool) -> None:
             ## add to database
             proc,_ = add_process(data_payload, verbose=verbose)
             ## add the connection 
-            proc.input_material.connect(input_material)
+            proc.input_material.connect(input_material).save()
         else: 
             output_material = material_obj
             data_payload = process_payload(uuid=process,
@@ -62,7 +62,7 @@ def populate_process_from_df(df:pd.DataFrame,verbose:bool) -> None:
             ## add to database
             proc,_ = add_process(data_payload, verbose=verbose)
             ## add the connection 
-            proc.output_material.connect(output_material)
+            proc.output_material.connect(output_material).save()
             
             
 def add_process(process_dict:dict, verbose:bool):
