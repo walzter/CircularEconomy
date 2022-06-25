@@ -53,7 +53,7 @@ def populate_process_from_df(df:pd.DataFrame,verbose:bool) -> None:
             ## add to database
             proc,_ = add_process(data_payload, verbose=verbose)
             ## add the connection 
-            proc.input_material.connect(input_material).save()
+            proc.input_material.connect(input_material)
         else: 
             output_material = material_obj
             data_payload = process_payload(uuid=process,
@@ -62,7 +62,7 @@ def populate_process_from_df(df:pd.DataFrame,verbose:bool) -> None:
             ## add to database
             proc,_ = add_process(data_payload, verbose=verbose)
             ## add the connection 
-            proc.output_material.connect(output_material).save()
+            proc.output_material.connect(output_material)
             
             
 def add_process(process_dict:dict, verbose:bool):
