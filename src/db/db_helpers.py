@@ -61,3 +61,74 @@ def remove_material(name:str):
     return ele
 
 
+# Filter a specific material from the database by name and type and return the corresponding node 
+def get_material_by_name_and_type(name:str, type:str):
+    """
+    Get a specific material from the database.
+    """
+    ele = db.cypher_query("MATCH (n:Material {name: '" + name + "', type: '" + type + "'}) RETURN n")
+    return ele
+
+
+# Get a specific material from the database that matches as input from the database 
+def get_material_by_input(name:str):
+    """
+    Get a specific material from the database.
+    """
+    ele = db.cypher_query("MATCH (n:Material {input: '" + name + "'}) RETURN n")
+    return ele
+
+# Get a specific material from the database that matches as output from the database query
+def get_material_by_output(name:str):
+    """
+    Get a specific material from the database.
+    """
+    ele = db.cypher_query("MATCH (n:material {output: '" + name + "'}) RETURN n')")
+    return ele
+
+# Get materials that are not used by processes
+def get_materials_not_used():
+    """
+    Geting materials that are not used by processes.
+    """
+    ele = db.cypher_query("MATCH (n:Material) WHERE NOT (n)--(:Process) RETURN n")
+    return ele
+
+# Get material names that are not used by processes
+def get_material_names_not_used():
+    """
+    Geting material names that are not used by processes.
+    """
+    ele = db.cypher_query("MATCH (n:Material) WHERE NOT (n)--(:Process) RETURN n.name")
+    return ele
+
+def get_processes_outputs():
+    """
+    Get the processes outputs that are available to use as input to another process and return the corresponding node.
+    """
+    ele = db.cypher_query("MATCH (n:Process) WHERE NOT (n)--(:Process) RETURN n")
+    return ele
+
+# Get the attributes of a specific process
+def get_process_attributes(name:str):
+    """
+    Get the attributes of a specific process.
+    """
+    ele = db.cypher_query("MATCH (n:Process {name: '" + name + "'}) RETURN n")
+    return ele
+
+# Get the attributes of a specific material
+def get_material_attributes(name:str):
+    """
+    Get the attributes of a specific material.
+    """
+    ele = db.cypher_query("MATCH (n:Material {name: '" + name + "'}) RETURN n")
+    return ele
+
+# Get the count of energy attributes of a specific material
+def get_material_energy_attributes_count(name:str):
+    """
+    Get the count of energy attributes of a specific material.
+    """
+    ele = db.cypher_query("MATCH (n:Material {name: '" + name + "'}) RETURN count(n.energy)")
+    return ele
