@@ -11,8 +11,7 @@ def load_dataframe(path:str) -> pd.DataFrame:
     ## make the header as as columns 
     df.columns = header
     # set the to processes 
-    df = df.set_index(9'''''''''''''''
-                      '''''''''''
+    df = df.set_index("Processes")
 def get_edge_list(df:pd.DataFrame, filter:bool = False) -> list:
     """Function to create a list of edges from a dataframe."""
     if filter:
