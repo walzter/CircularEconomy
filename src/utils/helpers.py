@@ -29,11 +29,10 @@ def constructing_graph(df:pd.DataFrame) -> Graph:
 
     NoNodes = len(G.nodes())
     NoEdges = len(G.edges())
-    degrees = nx.degree(G)
+    degrees = [x for x in nx.degree(G)]
     ## get the number of degrees 
-    degs = [x for x in degrees]
-    Max_degree = max(degs,key=itemgetter(1))
-    Min_degree = min(degs,key=itemgetter(1))
+    Max_degree = max(degrees,key=itemgetter(1))
+    Min_degree = min(degrees,key=itemgetter(1))
     avg_path_lenght = nx.average_shortest_path_length(G)  
     loops = nx.number_of_selfloops(G)  
 
