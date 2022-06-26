@@ -23,9 +23,7 @@ def constructing_graph(df:pd.DataFrame) -> Graph:
     ## add the edges 
     G.add_edges_from(get_edge_list(df,filter=True))
     # get some shape from the graph
-
-    
-    direction  =nx.is_directed(G)
+    direction = nx.is_directed(G)
 
     NoNodes = len(G.nodes())
     NoEdges = len(G.edges())
