@@ -1,6 +1,26 @@
 import pandas as pd 
 import numpy as np 
 import neo4j
+import matplotlib.pyplot as plt
+import networkx as nx
+
+
+def reading_data(path:str) -> pd.DataFrame:
+    
+    df = pd.read_csv(path)
+
+
+    #take the first column of the data and convert as the index of the dataframe\n",
+    df.index = df.iloc[:,0]
+
+    #delete the first column
+    df = df.drop(df.columns[0], axis=1)
+
+
+    return (df)
+
+
+
 def load_dataframe(path:str) -> pd.DataFrame:
     """Function to load the Adjacency Matrix from a csv file."""
     df = pd.read_csv(path)
