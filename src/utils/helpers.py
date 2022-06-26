@@ -72,11 +72,16 @@ def constructing_graph(df:pd.DataFrame) -> Graph:
     plt.show()
 
     #Plot the degree distribution
-    # degree distribution
     h = nx.degree_histogram(G)
-    plt.figure(figsize=(12,12))
-    plt.title("Degree distribution")
-    plt.hist(h, bins=10)
+    plt.figure(figsize=(18,8))
+    # Title for the plot is the degree distribution of the distribution of the degree of the graph G (h)
+    #Title bigger than the rest of the text
+    plt.title("Degree distribution of the chemistry industry graph", fontsize=20)
+    # x-axis for the plot is the degree k  and y-axis is number of nodes with degree k
+    plt.xlabel("Degree")
+    plt.ylabel("Number of nodes")
+    plt.hist(h, bins=14)
+
     return G, degrees, Max_degree, Min_degree, avg_path_lenght, loops
 
 
