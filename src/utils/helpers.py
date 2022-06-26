@@ -3,6 +3,84 @@ import numpy as np
 import neo4j
 import matplotlib.pyplot as plt
 import networkx as nx
+from networkx import Graph
+
+import matplotlib.pyplot as plt
+import networkx as nx
+from networkx import NetworkXError, NetworkXPointlessConcept, NetworkXAlgorithmError
+import pandas as pd
+import numpy as np
+# Create a graph with the dataframe in networkx 
+
+
+def constructing_graph(df:pd.DataFrame) -> Graph:
+    """Function to create a graph from a dataframe."""
+    ## create a graph 
+    G = Graph()
+    ## add the nodes 
+    G.add_nodes_from(df.index)
+    G.add_nodes_from(df.columns)
+    ## add the edges 
+    G.add_edges_from(get_edge_list(df,filter=True))
+    # get some shape from the graph
+
+    
+    direction  =nx.is_directed(G)
+
+    NoNodes = len(G.nodes())
+    NoEdges = len(G.edges())
+    degrees = sorted(nx.degree(G))
+    Max_degree = max(degrees)
+    Min_degree = min(degrees)
+    avg_path_lenght = nx.average_shortest_path_length(G)  
+    loops = nx.number_of_selfloops(G)  
+
+
+    print('---------DESCRIPTORS FOR THE GRAPH---------')
+    print('*******************************************')
+
+    print("Is the graph directed?           : {}".format(direction))            
+    print("Number of nodes                  : {}".format(NoNodes))                    # Number of nodes
+    print("Number of edges                  : {}".format(NoEdges))                    # number of edges
+    #print("Average degree: {}"(np.mean(degrees[1])))            # Average degree
+    print("Maximum degree                   : {}".format(Max_degree))                # Maximum degree
+    print("Minimum degree                   : {}".format(Min_degree))                # Minimum degree
+    print("Diameter                         : {}".format(nx.diameter(G)))                    # Diameter
+    print("Radius                           : {}".format(nx.radius(G)))                        # Radius
+    print("Number of connected components   : {}".format(nx.number_connected_components(G))) # Number of connected components
+    print("Number of self loops             : {}".format(loops)) # Number of self loops
+    print("Average path length              : {}".format(avg_path_lenght)) # Average path length
+    
+    print('')
+    print('**************************************************************************************')
+    print("Clustering coefficient           : {}".format(nx.clustering(G)))    # Clustering coefficient
+    
+    print('')
+    print('**************************************************************************************')
+    print("Degree distribution              : {}".format(degrees))                # Degree dsitribution
+
+    print('')
+    
+
+    print('------------------Descriptors analisys finished------------------')
+
+
+
+
+    plt.figure(figsize=(12,12))
+    nx.draw(G, with_labels=True)
+    plt.show()
+
+    #Plot the degree distribution
+    # degree distribution
+    h = nx.degree_histogram(G)
+    plt.figure(figsize=(12,12))
+    plt.title("Degree distribution")
+    plt.hist(h, bins=10)
+    return G, degrees, Max_degree, Min_degree, avg_path_lenght, loops
+
+
+
 
 
 def reading_data(path:str) -> pd.DataFrame:
