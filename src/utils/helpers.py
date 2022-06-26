@@ -7,9 +7,9 @@ from networkx import Graph
 
 import matplotlib.pyplot as plt
 import networkx as nx
-from networkx import NetworkXError, NetworkXPointlessConcept, NetworkXAlgorithmError
 import pandas as pd
 import numpy as np
+from operator import itemgetter
 # Create a graph with the dataframe in networkx 
 
 
@@ -29,9 +29,11 @@ def constructing_graph(df:pd.DataFrame) -> Graph:
 
     NoNodes = len(G.nodes())
     NoEdges = len(G.edges())
-    degrees = sorted(nx.degree(G))
-    Max_degree = max(degrees)
-    Min_degree = min(degrees)
+    degrees = nx.degree(G)
+    ## get the number of degrees 
+    degs = [x for x in degrees]
+    Max_degree = max(degs,key=itemgetter(1))
+    Min_degree = min(degs,key=itemgetter(1))
     avg_path_lenght = nx.average_shortest_path_length(G)  
     loops = nx.number_of_selfloops(G)  
 
